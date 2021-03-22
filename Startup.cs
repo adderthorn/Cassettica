@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Cassettica.Library;
 
 namespace Cassettica
 {
@@ -21,7 +22,11 @@ namespace Cassettica
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson();
+
+            // Dependency Injection
+            services.AddSingleton<IMusicLibrary, MusicLibrary>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -44,7 +49,7 @@ namespace Cassettica
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
